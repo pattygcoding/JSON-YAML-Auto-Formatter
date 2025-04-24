@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>JSON/YAML Formatter (Go + WASM)</title>
+    <style>
+        body {
+            font-family: monospace;
+            background: #111;
+            color: #eee;
+            padding: 1em;
+        }
+
+        textarea,
+        pre {
+            width: 100%;
+            height: 200px;
+            background: #222;
+            color: #0f0;
+            padding: 1em;
+        }
+
+        button,
+        select {
+            margin-top: 1em;
+            padding: 0.5em 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>JSON/YAML Formatter</h1>
+    <label for="formatSelect">Format as:</label>
+    <select id="formatSelect">
+        <option value="auto">Auto-detect</option>
+        <option value="json">JSON</option>
+        <option value="yaml">YAML</option>
+    </select>
+    <textarea id="input" placeholder="Paste JSON or YAML here..."></textarea><br>
+    <button id="formatBtn">Format</button>
+    <pre id="output">Waiting for input...</pre>
+
+    <script src="wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        let formatInput;
+
+        WebAssembly.instantiateStreaming(fetch("formatter-go.wasm"), go.importObject).then((result) => {
+            go.run(result.instance);
+            formatInput = window.formatJSON; // exported from Go
+
+            document.getElementById("formatBtn").onclick = () => {
+                const input = document.getElementById("input").value;
+                const mode = document.getElementById("formatSelect").value;
+
+                // If user forces JSON or YAML, prepend a hint for Go
+                let formattedInput = input;
+                if (mode === "json") formattedInput = "///force:json///\n" + input;
+                if (mode === "yaml") formattedInput = "///force:yaml///\n" + input;
+
+                const result = formatInput(formattedInput);
+                document.getElementById("output").textContent = result;
+            };
+        });
+    </script>
+</body>
+
+</html>
