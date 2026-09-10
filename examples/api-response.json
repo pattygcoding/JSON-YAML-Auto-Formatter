@@ -1,0 +1,27 @@
+{
+    "status": "success",
+    "generatedAt": "2026-09-09T10:30:00Z",
+    "filters": {
+        "category": "all",
+        "featuredOnly": false,
+        "limit": 3
+    },
+    "items": [
+        {
+            "id": "project-001",
+            "title": "Atlas Commerce",
+            "slug": "atlas-commerce",
+            "links": [
+                "https://example.com/atlas-commerce",
+                "https://github.com/example/atlas-commerce"
+            ]
+        },
+        {
+            "id": "project-002",
+            "title": "Northstar Notes",
+            "slug": "northstar-notes",
+            "links": []
+        }
+    ],
+    "nextPage": null
+}

@@ -1,0 +1,25 @@
+site:
+    title: Maya Chen | Design and Engineering
+    theme:
+        mode: light
+        accent: '#e05d3f'
+        showGrid: true
+    navigation:
+        - label: Work
+          href: /work
+        - label: About
+          href: /about
+        - label: Contact
+          href: /contact
+    featuredProject:
+        title: Atlas Commerce
+        image: /images/atlas-commerce.webp
+        alt: Wholesale ordering dashboard on a laptop
+        cta:
+            label: Read the case study
+            href: /work/atlas-commerce
+    footer:
+        copyrightYear: 2026
+        social:
+            github: https://github.com/example
+            linkedin: https://linkedin.com/in/example

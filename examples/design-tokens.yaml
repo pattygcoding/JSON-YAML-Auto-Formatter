@@ -1,0 +1,23 @@
+color:
+    ink: '#172121'
+    paper: '#f7f5ef'
+    coral: '#e05d3f'
+    sage: '#9db7a5'
+    line: '#d9ddd6'
+typography:
+    display:
+        family: Fraunces
+        weight: 600
+        size: 'clamp(2.5rem, 6vw, 5.5rem)'
+    body:
+        family: DM Sans
+        weight: 400
+        lineHeight: 1.6
+spacing:
+    unit: 4
+    section: 96
+    gutter: 24
+motion:
+    easeOut: 'cubic-bezier(0.22, 1, 0.36, 1)'
+    durationFast: 180
+    respectReducedMotion: true

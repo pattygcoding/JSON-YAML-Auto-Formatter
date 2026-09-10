@@ -1,0 +1,33 @@
+portfolio:
+    owner: Maya Chen
+    role: Product designer and frontend engineer
+    location: Toronto, Canada
+    availableForWork: true
+    contact:
+        email: maya@example.com
+        website: https://maya-chen.example.com
+    projects:
+        - name: Atlas Commerce
+          year: 2025
+          category: Product design
+          featured: true
+          tags:
+              - research
+              - design systems
+              - e-commerce
+          description: A calmer wholesale ordering experience for independent retailers.
+          metrics:
+              checkoutCompletion: 0.42
+              monthlyUsers: 18400
+        - name: Northstar Notes
+          year: 2024
+          category: Web application
+          featured: false
+          tags:
+              - React
+              - accessibility
+              - collaboration
+          description: A lightweight workspace for turning field notes into shared decisions.
+          metrics:
+              weeklyActiveTeams: 126
+              satisfactionScore: 4.8

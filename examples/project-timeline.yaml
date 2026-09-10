@@ -1,0 +1,29 @@
+project: Field Guide
+status: in-progress
+lastUpdated: 2026-08-28
+milestones:
+    - name: Discovery
+      status: complete
+      completedOn: 2026-07-10
+      deliverables:
+          - Interview synthesis
+          - Opportunity map
+    - name: Prototype
+      status: complete
+      completedOn: 2026-08-02
+      deliverables:
+          - Core interaction model
+          - Mobile prototype
+    - name: Build
+      status: active
+      completedOn: null
+      deliverables:
+          - Component library
+          - Responsive screens
+          - Content migration
+    - name: Launch
+      status: upcoming
+      completedOn: null
+      deliverables:
+          - Accessibility review
+          - Analytics handoff

@@ -1,0 +1,25 @@
+{
+    "caseStudy": {
+        "title": "Harbor Health",
+        "client": "Harbor Health Collective",
+        "published": 2025,
+        "summary": "A patient-first booking experience for a growing network of neighborhood clinics.",
+        "services": ["Strategy", "UX design", "Frontend development"],
+        "challenge": {
+            "headline": "Patients were abandoning bookings before choosing a time.",
+            "details": [
+                "The existing flow asked for too much information up front.",
+                "Availability was difficult to compare across clinic locations."
+            ]
+        },
+        "outcomes": {
+            "bookingCompletionIncrease": 0.31,
+            "supportTicketsReduced": 0.18,
+            "launchStatus": "live"
+        },
+        "testimonial": {
+            "quote": "The new flow feels simple without making the underlying system feel simplistic.",
+            "attribution": "Leila Morgan, Operations Director"
+        }
+    }
+}
