@@ -1,0 +1,10 @@
+# Formatter settings
+name: formatter
+nested:
+  enabled: true
+  items:
+    - one
+    - two
+message: |
+  Keep this text.
+  And this line.

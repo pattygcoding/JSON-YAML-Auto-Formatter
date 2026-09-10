@@ -3,8 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>JSON/YAML Formatter (Go + WASM)</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: monospace;
             background: #111;
@@ -14,11 +19,23 @@
 
         textarea,
         pre {
+            display: block;
             width: 100%;
             height: 200px;
             background: #222;
             color: #0f0;
             padding: 1em;
+            overflow: auto;
+            tab-size: 4;
+        }
+
+        textarea {
+            margin-top: 1em;
+            resize: vertical;
+        }
+
+        button:disabled {
+            opacity: 0.5;
         }
 
         button,
@@ -37,32 +54,51 @@
         <option value="json">JSON</option>
         <option value="yaml">YAML</option>
     </select>
-    <textarea id="input" placeholder="Paste JSON or YAML here..."></textarea><br>
-    <button id="formatBtn">Format</button>
-    <pre id="output">Waiting for input...</pre>
+    <textarea id="input" aria-label="JSON or YAML input" spellcheck="false" placeholder="Paste JSON or YAML here..."></textarea>
+    <button id="formatBtn" disabled>Format</button>
+    <pre id="output" role="status" aria-live="polite">Loading formatter...</pre>
 
     <script src="wasm_exec.js"></script>
     <script>
-        const go = new Go();
-        let formatInput;
+        const formatButton = document.getElementById("formatBtn");
+        const output = document.getElementById("output");
 
-        WebAssembly.instantiateStreaming(fetch("formatter-go.wasm"), go.importObject).then((result) => {
-            go.run(result.instance);
-            formatInput = window.formatJSON; // exported from Go
+        function showLoadError(error) {
+            formatButton.disabled = true;
+            output.textContent = "Unable to load formatter: " + error.message;
+        }
 
-            document.getElementById("formatBtn").onclick = () => {
-                const input = document.getElementById("input").value;
-                const mode = document.getElementById("formatSelect").value;
+        async function initializeFormatter() {
+            try {
+                const go = new Go();
+                const response = await fetch("formatter.wasm");
+                if (!response.ok) {
+                    throw new Error("HTTP " + response.status + " fetching formatter.wasm");
+                }
+                const bytes = await response.arrayBuffer();
+                const result = await WebAssembly.instantiate(bytes, go.importObject);
+                go.run(result.instance).catch(showLoadError);
+                if (typeof window.formatInput !== "function") {
+                    throw new Error("Formatter did not initialize");
+                }
+                formatButton.onclick = () => {
+                    try {
+                        output.textContent = window.formatInput(
+                            document.getElementById("input").value,
+                            document.getElementById("formatSelect").value
+                        );
+                    } catch (error) {
+                        output.textContent = "Formatting failed: " + error.message;
+                    }
+                };
+                formatButton.disabled = false;
+                output.textContent = "Waiting for input...";
+            } catch (error) {
+                showLoadError(error);
+            }
+        }
 
-                // If user forces JSON or YAML, prepend a hint for Go
-                let formattedInput = input;
-                if (mode === "json") formattedInput = "///force:json///\n" + input;
-                if (mode === "yaml") formattedInput = "///force:yaml///\n" + input;
-
-                const result = formatInput(formattedInput);
-                document.getElementById("output").textContent = result;
-            };
-        });
+        initializeFormatter();
     </script>
 </body>
 
