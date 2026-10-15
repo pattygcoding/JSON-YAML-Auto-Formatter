@@ -1,2 +1,3 @@
-wasm_exec.js
-formatter.wasm
+# Rust build output
+/target/
+/formatter.wasm

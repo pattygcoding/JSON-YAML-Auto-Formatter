@@ -3,17 +3,10 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { before, test } = require("node:test");
 
-globalThis.crypto ??= require("node:crypto").webcrypto;
-require("../wasm_exec.js");
+const formatter = require("../formatter.js");
 
 before(async () => {
-    const go = new Go();
-    const bytes = fs.readFileSync(path.join(__dirname, "..", "formatter.wasm"));
-    const { instance } = await WebAssembly.instantiate(bytes, go.importObject);
-    go.run(instance).catch((error) => {
-        console.error(error);
-        process.exitCode = 1;
-    });
+    await formatter.init(fs.readFileSync(path.join(__dirname, "..", "formatter.wasm")));
     assert.equal(typeof globalThis.formatInput, "function");
 });
 
